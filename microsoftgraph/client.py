@@ -130,6 +130,21 @@ class Client(object):
         else:
             self.token = token
 
+    def get(self, argument, params=None, token_required=True):
+        """Generic get
+
+        Args:
+            argument: API access point to be pasted to base_url
+            params: A dict.
+
+        Returns:
+            A dict.
+
+        """
+        if token_required and not self.token:
+            raise TokenRequired('You must set the Token.')
+        return self._get(self.base_url + argument, params=params)
+    
     @token_required
     def get_me(self, params=None):
         """Retrieve the properties and relationships of user object.
